@@ -1,68 +1,92 @@
-import sys 
-import re
+import os
 
-global fichier_resultat
+try:
+    from io import StringIO         # Python 3
+except:
+    from StringIO import StringIO   # Python 2
 
-def saisie_int(message):
+def saisie_int(message, output_fd=StringIO()):
     try:
-        valeur = message
-        return int(valeur)
+        return int(message)
     except:
-        return fichier_erreur.write('La valeur {} n\'est pas un nombre\n'.format(valeur))
+        error_message = 'La valeur {} n\'est pas un nombre\n'.format(message)
+        output_fd.write(error_message)
+        raise ValueError(error_message)
 
-def saisie_ope(message):
+def saisie_ope(message, output_fd=StringIO()):
     if message in [ '+', '-', '/', '*' ]:
         return message
     else:
-        return fichier_erreur.write('{} n\'est pas un operateur supporte\n'.format(message))
+        error_message = '{} n\'est pas un operateur supporte\n'.format(message)
+        output_fd.write(error_message)
+        raise ValueError(error_message)
 
-def operation(x, y, signe):
+def operation(x, y, signe, output_fd=StringIO()):
+    '''
+    Render a simple operation
+    Raises a ValueError if operator is unknown
+    '''
     if '+' in signe:
-        return x + y
+        result = x + y
+        output_fd.write("La somme de {0} et de {1} vaut {2}\n".format(x, y, result))
+        return result
 
     if '*' in signe:
-        return x * y
+        result = x * y
+        output_fd.write("Le produit de {0} et de {1} vaut {2}\n".format(x, y, result))
+        return result
 
     if '/' in signe:
-        return x / y
+        result = int(x / y)
+        output_fd.write("Le quotient de {0} par {1} vaut {2}\n".format(x, y, result))
+        return result
 
     if '-' in signe:
-        return x - y
+        result = x - y
+        output_fd.write("La difference entre {0} et {1} vaut {2}\n".format(x, y, result))
+        return result
 
-def lireFichier(fichier_donnees):
-    global fichier_resultat
-    global fichier_erreur
-    fichier_resultat = open("resultat.txt", "w")
-    fichier_erreur = open("erreur.txt", "w")
+    raise ValueError
 
-    with open(fichier_donnees, 'r') as content_file:
-        for ligne_tmp in content_file:
-            ligne(ligne_tmp)
+def lireFichier(data_file, error_file, result_file):
+    fichier_donnees = os.path.abspath(data_file)
+    error_file = os.path.abspath(error_file)
+    result_file = os.path.abspath(result_file)
 
-    fichier_resultat.close()
-    fichier_erreur.close()
-        
-def ligne(_ligne):
-    seq = _ligne.split(";")
-    x = saisie_int(seq[0])
-    y = saisie_int(seq[1])
-    z = saisie_ope(seq[2])
-    
-    try:
-        w = operation(x, y, z)
-        if '+' in z:
-            fichier_resultat.write("La somme de {0} et de {1} vaut {2}\n".format(x, y, w))
+    with open(fichier_donnees, 'r') as content_file, \
+         open(result_file, 'w') as result_file, \
+         open(error_file, 'w') as error_file:
+            for ligne_tmp in content_file:
+                try:
+                    ligne(
+                        ligne_tmp,
+                        error_output_fd=error_file,
+                        result_output_fd=result_file
+                    )
+                except Exception:
+                    pass
 
-        if '*' in z:
-            fichier_resultat.write("Le produit de {0} et de {1} vaut {2}\n".format(x, y, w))
+def line_to_operation(line, output_fd=StringIO()):
+    '''
+    Split a line into a list of 2 operands plus operator
+    Output is a valid input for operation()
+    Remove trailing chars if any and ignore anything after the third word
+    '''
+    field_1, field_2, field_3 = line.rstrip().split(';')[0:3]
 
-        if '-' in z:
-            fichier_resultat.write("La difference entre {0} et {1} vaut {2}\n".format(x, y, w))
+    return [
+        saisie_int(field_1, output_fd),
+        saisie_int(field_2, output_fd),
+        saisie_ope(field_3, output_fd),
+    ]
 
-        if '/' in z:
-            fichier_resultat.write("Le quotient de {0} par {1} vaut {2}\n".format(x, y, w))
-    except:
-        pass
+def ligne(ligne, error_output_fd=StringIO(), result_output_fd=StringIO()):
+    x, y, z = line_to_operation(ligne, output_fd=error_output_fd)
+    return operation(x, y, z, output_fd=result_output_fd)
 
 if __name__ == '__main__':
-    lireFichier("calcul.txt")
+    lireFichier(
+        "calcul.txt",
+        'erreur.txt',
+        'resultat.txt',
+    )
