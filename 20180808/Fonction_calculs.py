@@ -5,7 +5,7 @@ def saisie_int(message):
         valeur = input(message)
         return int(valeur)
     except:
-        raise TypeError('La valeur {} n\'est pas un nombre'.format(valeur))
+        raise TypeError('La valeur {} n\'est pas un nombre\n'.format(valeur))
 
 def saisie_ope(message):
     valeur = input(message).upper()
@@ -15,7 +15,7 @@ def saisie_ope(message):
     if valeur == 'Q':
         sys.exit("Bye bye")
 
-    raise ValueError('{} n\'est pas un operateur supporte'.format(valeur))
+    raise ValueError('{} n\'est pas un operateur supporte\n'.format(valeur))
 
 def operation(x, y, signe):
     if 'A' in signe:

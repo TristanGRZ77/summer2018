@@ -1,2 +1,6 @@
 # Avoid commit of VS Code local preferences
 .vscode/
+.DS_Store
+20180808/calcul.txt
+20180808/erreur.txt
+20180808/resultat.txt
