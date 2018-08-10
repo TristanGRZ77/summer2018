@@ -1,2 +1,8 @@
 # Avoid commit of VS Code local preferences
 .vscode/
+
+# Tests
+.noseids
+
+# Cache
+__pycache__/
