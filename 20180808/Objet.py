@@ -5,7 +5,6 @@ class operation(object):
         self._valeury = 2
 
     def _get_valeurx(self):
-        print("Valeur de x : ")
         return self._valeurx
 
     def _set_valeurx(self, x):
@@ -13,7 +12,6 @@ class operation(object):
         self._valeurx = x
 
     def _get_valeury(self):
-        print("Valeur de y : ")
         return self._valeury
 
     def _set_valeury(self, y):
@@ -21,7 +19,6 @@ class operation(object):
         self._valeury = y
 
     def _get_operateur(self):
-        print("Operateur : ")
         return self._operateur
 
     def _set_operateur(self, z):
@@ -32,16 +29,57 @@ class operation(object):
     valeury = property(_get_valeury, _set_valeury)
     operateur = property(_get_operateur, _set_operateur)
 
+import sys 
+import re
+
+def saisie_int(message):
+    try:
+        valeur = message
+        return int(valeur)
+    except:
+        return ("La valeur {} n'est pas un nombre".format(valeur))
+        pass
+
+def saisie_ope(message):
+    if message in [ '+', '-', '/', '*' ]:
+        return message
+    else:
+        return ("La valeur {} n'est pas un operateur supporte".format(message))
+        pass
+
+def calcul(x, y, z):
+    if '+' in z:
+        try:
+            print x + y
+        except:
+            print("Operation impossible")
+
+    if '*' in z:
+        try:
+            print x * y
+        except:
+            print("Operation impossible")
+
+    if '/' in z:
+        try:
+            print x / y
+        except:
+            print("Operation impossible")
+
+    if '-' in z:
+        try:
+            print x - y
+        except:
+            print("Operation impossible")
+
 a = operation()
-a.valeurx = raw_input("Saisir la nouvelle valeur de x : ")
-a.valeury = raw_input("Saisir la nouvelle valeur de y : ")
-a.operateur = raw_input("Saisir l'operateur : ")
 
+a.valeurx = saisie_int(raw_input("Saisir la nouvelle valeur de x : "))
+a.valeury = saisie_int(raw_input("Saisir la nouvelle valeur de y : "))
+a.operateur = saisie_ope(raw_input("Saisir l'operateur : "))
 
+x = a.valeurx 
+y = a.valeury
+z = a.operateur 
 
-
-
-#= "Addition"
-#        self.s = "Soustraction"
-#        self.m = "Multiplication"
-#        self.d = "Division"
+calcul(x, y, z)
