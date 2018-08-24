@@ -5,7 +5,8 @@ w = True
 root = Tk()
 global x
 global y
-global sprite
+
+# Definition des variables
 
 largeurEcran = 320
 hauteurEcran = 320
@@ -22,9 +23,13 @@ ymin = (hauteurImage / 2) + 1
 
 can = Canvas(root, width = largeurEcran, height = hauteurEcran, bg = "black")
 
+# Fonction qui replace l'image au centre
+
 def home():
     stop2()
     action(largeurEcran/2,hauteurEcran/2)
+
+# Boutons directionnels et deplacements
 
 def boutonHaut():
     global x
@@ -94,9 +99,14 @@ def deplacementGauche():
 def deplacementDroit():
     can.after(100, boutonDroit)
 
+# Fonction qui arrete le deplacement de l'image
+
 def stop():
     global w
     w = False
+
+# Fonction liee a la fonction home, qui arrete le deplacement de l'image et replace les coordonees du centre de l'image au centre de la fenetre, 
+# ce qui permet de pouvoir utiliser a nouveau les boutons directionnels depuis le centre de la fenetre et non la ou l'image s'est arretee
 
 def stop2():
     global w
@@ -107,9 +117,13 @@ def stop2():
     x = 160
     y = 160
 
+# Actualise les coordonees du centre de l'image
+
 def action(_x, _y):
     can.delete("all") 
     can.create_image(_x, _y, image = img)
+
+# Affiche la fenetre
 
 def affichage():
     can.grid(column = 1, row = 0)
