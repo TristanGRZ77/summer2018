@@ -27,6 +27,7 @@ def home():
     global x
     global y
     deplacementStop()
+    affichageHome()
     x = largeurEcran/2
     y = hauteurEcran/2
     action(x,y)
@@ -82,24 +83,49 @@ def deplacementDroit(_temps, _x, _y):
 
 def boutonHaut():
     deplacementStop()
+    affichageHaut()
     deplacementHaut(tempsDeplacement, x, y)
     
 def boutonBas():
     deplacementStop()
+    affichageBas()
     deplacementBas(tempsDeplacement, x, y)
 
 def boutonGauche():
     deplacementStop()
+    affichageGauche()
     deplacementGauche(tempsDeplacement, x, y)
 
 def boutonDroit():
     deplacementStop()
+    affichageDroit()
     deplacementDroit(tempsDeplacement, x, y)
+
+# Affichage des labels
+
+def affichageHaut():
+    haut = Label(root, text = "  Haut  ", bg = "black", fg = "white").grid(column = 1, row = 0, sticky = W)
+
+def affichageBas():
+    bas = Label(root, text = "   Bas   ", bg = "black", fg = "white").grid(column = 1, row = 0, sticky = W)
+
+def affichageGauche():
+    gauche = Label(root, text = "Gauche", bg = "black", fg = "white").grid(column = 1, row = 0, sticky = W)
+
+def affichageDroit():
+    droite = Label(root, text = " Droite ", bg = "black", fg = "white").grid(column = 1, row = 0, sticky = W)
+
+def affichageStop():
+    stop1 = Label(root, text = "  Stop  ", bg = "black", fg = "white").grid(column = 1, row = 0, sticky = W)
+
+def affichageHome():
+    home1 = Label(root, text = "  Home  ", bg = "black", fg = "white").grid(column = 1, row = 0, sticky = W)
 
 # Fonction qui arrete le deplacement de l'image
 def deplacementStop():
     global _job
     if _job is not None:
+        affichageStop()
         root.after_cancel(_job)
         _job = None
 
@@ -112,13 +138,13 @@ def action(_x, _y):
 def affichage():
     global _job
     _job = None
-    can.grid(column = 1, row = 0)
-    Button(root, text = "Recentrer l'image", command = home ).grid(column = 1, row = 2)
-    Button(root, text = "Gauche", command = boutonGauche ).grid(column = 0, row = 2)
-    Button(root, text = "Droite", command = boutonDroit ).grid(column = 2, row = 2)
-    Button(root, text = "Haut", command = boutonHaut ).grid(column = 1, row = 1)
-    Button(root, text = "Bas", command = boutonBas ).grid(column = 1, row = 3)
-    Button(root, text = "Stop", command = deplacementStop ).grid(column = 1, row = 4)
+    can.grid(column = 1, row = 1)
+    Button(root, text = "Recentrer l'image", command = home ).grid(column = 1, row = 3, rowspan = 1)
+    Button(root, text = "Gauche", command = boutonGauche ).grid(column = 1, row = 3, rowspan = 1, sticky = W)
+    Button(root, text = "Droite", command = boutonDroit ).grid(column = 1, row = 3, rowspan = 1, sticky = E)
+    Button(root, text = "Haut", command = boutonHaut ).grid(column = 1, row = 2)
+    Button(root, text = "Bas", command = boutonBas ).grid(column = 1, row = 4)
+    Button(root, text = "Stop", command = deplacementStop ).grid(column = 1, row = 5)
     home()
 
 affichage()
