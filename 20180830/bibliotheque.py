@@ -62,10 +62,30 @@ def clear(_clear):
     t, t1, n, y = 0, 0, 0, 0
     _clear.set(str('0'))
 
-def ecran():
-    global z
-    global u
-    
+def changeMode():
+    lblmode = _mode.get().rstrip()
+    if lblmode == "Simple":
+        _mode.set("Scientifique")
+        btnresult.destroy()
+        btnadd.destroy()
+        btnsous.destroy()
+        btnmult.destroy()
+        btndiv.destroy()
+        btnmodulo.destroy()
+        ecranScientifique()
+
+    if lblmode == "Scientifique":
+        _mode.set("Simple")
+        btnhex.destroy()
+        ecran()
+
+#def baseToHex():
+#    inputHex = scientifiqueInput.get()
+#    print inputHex
+#    lblhex.set(hex(inputHex).split("x")[-1])
+
+def ecran__init__():
+    global z, u, _mode
     btn1 = Button(root, text = "1", command = lambda : x(1))
     btn1.grid(column = 0, row = 0)
     btn2 = Button(root, text = "2", command = lambda : x(2))
@@ -84,33 +104,54 @@ def ecran():
     btn8.grid(column = 1, row = 2)
     btn9 = Button(root, text = "9", command = lambda : x(9))
     btn9.grid(column = 2, row = 2)
-    btnc = Button(root, text = "C", command = clear)
-    btnc.grid(column = 0, row = 3)
+    btnclear = Button(root, text = "C", command = lambda : [clear(u), clear(z)])
+    btnclear.grid(column = 0, row = 3)
     btn0 = Button(root, text = "0", command = lambda : x(0))
     btn0.grid(column = 1, row = 3)
-    btnr = Button(root, text = "=", command = aegal)
-    btnr.grid(column = 2, row = 3)
-    btna = Button(root, text = "+", command = lambda : operation("+"))
-    btna.grid(column = 3, row = 0)
-    btns = Button(root, text = "-", command = lambda : operation("-"))
-    btns.grid(column = 3, row = 1)
-    btnm = Button(root, text = "*", command = lambda : operation("*"))
-    btnm.grid(column = 3, row = 2)
-    btnd = Button(root, text = "/", command = lambda : operation("/"))
-    btnd.grid(column = 3, row = 3)
-
-    btnd = Button(root, text = "%", command = lambda : operation("%"))
-    btnd.grid(column = 4, row = 1, stick = "W")
+    btnswitch = Button(root, text = "Mode", command = lambda : changeMode())
+    btnswitch.grid(column = 4, row = 0, stick = "W")
 
     u = StringVar()
     entree2 = Entry(root, textvariable = u)
-    entree2.grid(column = 4, row = 2)
+    entree2.grid(column = 4, row = 2, ipadx = 40)
     u.set("0")
-
     z = StringVar()
     entree = Entry(root, textvariable = z)
-    entree.grid(column = 4, row = 3)
+    entree.grid(column = 4, row = 3, ipadx = 40)
     z.set("0")
+    _mode = StringVar()
+    entree3 = Entry(root, textvariable = _mode)
+    entree3.grid(column = 4, row = 0, stick = "E")
+    _mode.set("Simple")
 
     btnquit = Button(root, text = 'Quitter', command = root.destroy)
-    btnquit.grid(column = 4, row = 0)
+    btnquit.grid(column = 4, row = 1, stick = "E")
+
+def ecran():
+    global btnresult, btnadd, btnsous, btnmult, btndiv, btnmodulo
+    btnresult = Button(root, text = "=", command = aegal)
+    btnresult.grid(column = 2, row = 3)
+    btnadd = Button(root, text = "+", command = lambda : operation("+"))
+    btnadd.grid(column = 3, row = 0)
+    btnsous = Button(root, text = "-", command = lambda : operation("-"))
+    btnsous.grid(column = 3, row = 1)
+    btnmult = Button(root, text = "*", command = lambda : operation("*"))
+    btnmult.grid(column = 3, row = 2)
+    btndiv = Button(root, text = "/", command = lambda : operation("/"))
+    btndiv.grid(column = 3, row = 3)
+    btnmodulo = Button(root, text = "%", command = lambda : operation("%"))
+    btnmodulo.grid(column = 4, row = 1, stick = "W")
+
+def ecranScientifique():
+    global btnhex, lblhex
+
+    btnhex = Button(root, text = "BaseVersHex", command = lambda : baseToHex())
+    btnhex.grid(column = 3, row = 2)
+
+#    lblhex = StringVar()
+#    entree4 = Entry(root, textvariable = lblhex)
+#    entree4.grid(column = 5, row = 3)
+#    lblhex.set("0")
+#    scientifiqueInput = Entry(root)
+#    scientifiqueInput.grid(column = 5, row = 1)
+#    scientifiqueInput.focus_set()

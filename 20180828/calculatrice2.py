@@ -16,36 +16,39 @@ def nombre(x):
         z.set(str(t))
 
 # fonctions liees aux boutons chiffres qui saisissent les valeurs desirees
-        
-def x0():
-        nombre(0.)
 
-def x1():
-        nombre(1.)
+def x(_nombre):
+    nombre(_nombre)
         
-def x2():
-        nombre(2.)
+#def x0():
+#        nombre(0.)
+
+#def x1():
+#        nombre(1.)
+        
+#def x2():
+#        nombre(2.)
                 
-def x3():
-        nombre(3.)
+#def x3():
+#        nombre(3.)
 
-def x4():
-        nombre(4.)
+#def x4():
+#        nombre(4.)
         
-def x5():
-        nombre(5.)
+#def x5():
+#        nombre(5.)
         
-def x6():
-        nombre(6.)
+#def x6():
+#        nombre(6.)
 
-def x7():
-        nombre(7.)
+#def x7():
+#        nombre(7.)
         
-def x8():
-        nombre(8.)
+#def x8():
+#        nombre(8.)
         
-def x9():
-        nombre(9.)
+#def x9():
+#        nombre(9.)
 
 # t1 correspond au deuxieme facteur de l'operation
 # fonctions d'operation
@@ -97,7 +100,7 @@ def clear():
         
 root = Tk.Tk()
 
-btn1 = Button(root, text = "1", command = x1)
+btn1 = Button(root, text = "1", command = x(1))
 btn1.grid(column = 0, row = 0)
 btn2 = Button(root, text = "2", command = x2)
 btn2.grid(column = 1, row = 0)

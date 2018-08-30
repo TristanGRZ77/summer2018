@@ -1,3 +1,3 @@
-from fonction import affichage()
+from fonction import *
 
 affichage()
