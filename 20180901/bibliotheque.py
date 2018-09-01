@@ -69,6 +69,8 @@ def clear(_clear):
 
 def changeMode():
     lblmode = btnswitch.cget("text").rstrip()
+    _label_resultat.set("")
+    _label_calcul.set("")
     if lblmode == "Sim":
         btnswitch.config(text="Sci")
         btnresult.destroy()
@@ -141,11 +143,11 @@ def conversion(_conversion):
             _label_resultat.set("Non hexadecimal")
 
     signe = ""
-#    _operande = ""
-
 
 def ecran__init__():
     global _label_calcul, label_calcul, _label_resultat, label_resultat, btnswitch, effacer_resultat
+
+    root.columnconfigure(4, pad = 100)
     btn1 = Button(root, text = "1", command = lambda : f_x(1))
     btn1.grid(column = 0, row = 0)
     btn2 = Button(root, text = "2", command = lambda : f_x(2))
@@ -182,7 +184,7 @@ def ecran__init__():
     _label_calcul.set("")
 
     btnquit = Button(root, text = 'Quitter', command = root.destroy)
-    btnquit.grid(column = 4, row = 0, stick = "E")
+    btnquit.grid(column = 4, row = 0)
     effacer_resultat = 0
 
 def ecran():
