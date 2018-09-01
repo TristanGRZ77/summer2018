@@ -141,7 +141,7 @@ def conversion(_conversion):
             _label_resultat.set("Non hexadecimal")
 
     signe = ""
-    _operande = ""
+#    _operande = ""
 
 
 def ecran__init__():
@@ -182,7 +182,7 @@ def ecran__init__():
     _label_calcul.set("")
 
     btnquit = Button(root, text = 'Quitter', command = root.destroy)
-    btnquit.grid(column = 5, row = 1, stick = "E")
+    btnquit.grid(column = 4, row = 0, stick = "E")
     effacer_resultat = 0
 
 def ecran():
